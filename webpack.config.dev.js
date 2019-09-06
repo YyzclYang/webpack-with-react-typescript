@@ -7,7 +7,8 @@ module.exports = Object.assign({}, baseConfig, {
   plugins: [
     new HtmlWebpackPlugin({
       title: "Webpack demo",
-      template: "./src/index.html"
+      template: "./src/index.html",
+      favicon: "./src/react.ico"
     })
   ]
 });

@@ -24,6 +24,17 @@ module.exports = {
       {
         test: /\.scss$/,
         loader: ["style-loader", "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.svg$/,
+        loader: "svg-sprite-loader"
+      },
+      {
+        test: /\.(jpg|png|bmp|jpe?g|gif|ico)$/,
+        loader: "url-loader",
+        options: {
+          limit: 8192
+        }
       }
     ]
   }
