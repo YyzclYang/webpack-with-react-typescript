@@ -6,7 +6,7 @@ const App: React.FunctionComponent = () => {
   return (
     <div className="page">
       <div>App</div>
-      <img src={require("./assets/img/react.png")} alt="" />
+      <img src={require("@/assets/img/react.png")} alt="" />
       <svg className="svg">
         <use xlinkHref="#react" />
       </svg>
