@@ -5,6 +5,10 @@
   "repository": "git@github.com:YyzclYang/webpack-with-react-typescript.git",
   "author": "YyzclYang <yyzclyang@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
+  },
   "dependencies": {
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
@@ -22,6 +26,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
+    "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.2.0",
