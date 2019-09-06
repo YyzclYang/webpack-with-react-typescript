@@ -6,7 +6,7 @@ module.exports = Object.assign({}, baseConfig, {
   devtool: "source-map",
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Webpack demo",
+      title: "webpack-with-react-typescript",
       template: "./src/index.html",
       favicon: "./src/react.ico"
     })
