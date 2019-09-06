@@ -20,6 +20,10 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: "awesome-typescript-loader"
+      },
+      {
+        test: /\.scss$/,
+        loader: ["style-loader", "css-loader", "sass-loader"]
       }
     ]
   }
