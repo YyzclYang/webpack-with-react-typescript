@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const baseConfig = require("./webpack.config");
 const path = require("path");
 
@@ -21,6 +22,9 @@ module.exports = Object.assign({}, baseConfig, {
       title: "webpack-with-react-typescript",
       template: "./src/index.html",
       favicon: "./src/react.ico"
+    }),
+    new MiniCssExtractPlugin({
+      filename: "index.css"
     })
   ]
 });
