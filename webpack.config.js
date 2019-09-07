@@ -1,5 +1,6 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -64,5 +65,15 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: "webpack-with-react-typescript",
+      template: "./src/index.html",
+      favicon: "./src/react.ico"
+    }),
+    new MiniCssExtractPlugin({
+      filename: "index.css"
+    })
+  ]
 };

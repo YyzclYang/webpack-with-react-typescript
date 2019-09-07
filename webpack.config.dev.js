@@ -1,9 +1,8 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const baseConfig = require("./webpack.config");
+const merge = require("webpack-merge");
 const path = require("path");
+const baseConfig = require("./webpack.config");
 
-module.exports = Object.assign({}, baseConfig, {
+module.exports = merge(baseConfig, {
   mode: "development",
   devtool: "source-map",
   devServer: {
@@ -16,15 +15,5 @@ module.exports = Object.assign({}, baseConfig, {
     open: true, //自动打开浏览器
     overlay: { warnings: false, errors: true }, // 在浏览器上全屏显示编译的errors或warnings。
     publicPath: "/"
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: "webpack-with-react-typescript",
-      template: "./src/index.html",
-      favicon: "./src/react.ico"
-    }),
-    new MiniCssExtractPlugin({
-      filename: "index.css"
-    })
-  ]
+  }
 });

@@ -1,8 +1,8 @@
+const merge = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const baseConfig = require("./webpack.config");
 
-module.exports = Object.assign({}, baseConfig, {
+module.exports = merge(baseConfig, {
   mode: "production",
   plugins: [
     new HtmlWebpackPlugin({
@@ -14,9 +14,6 @@ module.exports = Object.assign({}, baseConfig, {
         collapseWhitespace: true, //去除空格
         removeAttributeQuotes: true //去除属性引号
       }
-    }),
-    new MiniCssExtractPlugin({
-      filename: "index.css"
     })
   ]
 });
