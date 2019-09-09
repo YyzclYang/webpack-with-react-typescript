@@ -8,7 +8,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "index.js",
+    filename: "[name].bundle.[hash].js",
     publicPath: "/"
   },
   resolve: {
@@ -47,21 +47,30 @@ module.exports = {
         test: /\.(jpg|png|bmp|jpe?g|gif|ico)$/,
         loader: "url-loader",
         options: {
-          limit: 8192
+          limit: 8192,
+          outputPath: "./asset/images",
+          name: "[name].[hash].[ext]",
+          publicPath: "./dist/asset/images"
         }
       },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)$/,
         loader: "url-loader",
         options: {
-          limit: 8192
+          limit: 8192,
+          outputPath: "./asset/video",
+          name: "[name].[hash].[ext]",
+          publicPath: "./dist/asset/video"
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)$/,
         loader: "url-loader",
         options: {
-          limit: 8192
+          limit: 8192,
+          outputPath: "./asset/fonts",
+          name: "[name].[hash].[ext]",
+          publicPath: "./dist/asset/fonts"
         }
       }
     ]
@@ -73,7 +82,7 @@ module.exports = {
       favicon: "./src/react.ico"
     }),
     new MiniCssExtractPlugin({
-      filename: "index.css"
+      filename: "index.bundle.[hash].css"
     })
   ]
 };
