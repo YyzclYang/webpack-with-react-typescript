@@ -1,6 +1,6 @@
 import React from "react";
 import "./app.scss";
-import "./assets/img/react.svg";
+import "./assets/images/react.svg";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -13,7 +13,7 @@ const App: React.FunctionComponent = () => {
         </div>
         <p>Yay! You’re on React!</p>
         <div className="content">
-          <img src={require("@/assets/img/react.png")} alt="" />
+          <img src={require("@/assets/images/react.png")} alt="" />
         </div>
       </section>
     </div>

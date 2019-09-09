@@ -50,7 +50,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/images",
           name: "[name].[hash].[ext]",
-          publicPath: "./dist/asset/images"
+          publicPath: "./asset/images"
         }
       },
       {
@@ -60,7 +60,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/video",
           name: "[name].[hash].[ext]",
-          publicPath: "./dist/asset/video"
+          publicPath: "./asset/video"
         }
       },
       {
@@ -70,7 +70,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/fonts",
           name: "[name].[hash].[ext]",
-          publicPath: "./dist/asset/fonts"
+          publicPath: "./asset/fonts"
         }
       }
     ]
