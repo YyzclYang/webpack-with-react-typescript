@@ -60,7 +60,7 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/video",
+          outputPath: "./asset/media",
           name: "[name].[hash].[ext]",
           publicPath: "/asset/media"
         }

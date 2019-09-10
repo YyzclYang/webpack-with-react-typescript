@@ -15,6 +15,9 @@ const Page: React.FunctionComponent = () => {
         <div className="content">
           <img src={require("@/assets/images/react.png")} alt="" />
         </div>
+        <div>
+          <audio controls loop src={require("@/assets/media/News.mp3")}></audio>
+        </div>
       </section>
     </div>
   );
