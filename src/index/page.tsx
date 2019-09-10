@@ -1,17 +1,17 @@
 import React from "react";
-import "./app.scss";
-import "./assets/images/react.svg";
+import "./page.scss";
+import "@/assets/images/react.svg";
 
-const App: React.FunctionComponent = () => {
+const Page: React.FunctionComponent = () => {
   return (
-    <div className="page">
+    <div className="index-page">
       <section>
         <div>
           <svg className="logo">
             <use xlinkHref="#react" />
           </svg>
         </div>
-        <p>Yay! You’re on React!</p>
+        <p>Yay! You’re on Index Page!</p>
         <div className="content">
           <img src={require("@/assets/images/react.png")} alt="" />
         </div>
@@ -20,4 +20,4 @@ const App: React.FunctionComponent = () => {
   );
 };
 
-export default App;
+export default Page;

@@ -4,17 +4,18 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    index: "./src/index.tsx"
+    index: "./src/index/index.tsx",
+    about: "./src/about/index.tsx"
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].bundle.[hash].js",
+    path: path.resolve(__dirname, "../dist"),
+    filename: "[name]/index.bundle.[hash].js",
     publicPath: "/"
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
-      "@": path.resolve(__dirname, "src")
+      "@": path.resolve(__dirname, "../src")
     }
   },
   module: {
@@ -37,7 +38,9 @@ module.exports = {
           "css-loader",
           "postcss-loader",
           "sass-loader"
-        ]
+        ],
+        include: path.join(__dirname, "../src"), //限制范围，提高打包速度
+        exclude: /node_modules/
       },
       {
         test: /\.svg$/,
@@ -50,7 +53,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/images",
           name: "[name].[hash].[ext]",
-          publicPath: "./asset/images"
+          publicPath: "/asset/images"
         }
       },
       {
@@ -60,7 +63,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/video",
           name: "[name].[hash].[ext]",
-          publicPath: "./asset/video"
+          publicPath: "/asset/media"
         }
       },
       {
@@ -70,19 +73,27 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/fonts",
           name: "[name].[hash].[ext]",
-          publicPath: "./asset/fonts"
+          publicPath: "/asset/fonts"
         }
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "webpack-with-react-typescript",
-      template: "./src/index.html",
-      favicon: "./src/react.ico"
+      filename: "index/index.html",
+      template: "./src/index/index.html",
+      favicon: "./src/assets/images/react.ico",
+      chunks: ["index"]
+    }),
+    new HtmlWebpackPlugin({
+      filename: "about/index.html",
+      template: "./src/about/index.html",
+      favicon: "./src/assets/images/react.ico",
+      chunks: ["about"]
     }),
     new MiniCssExtractPlugin({
-      filename: "index.bundle.[hash].css"
+      filename: "[name]/index.bundle.[hash].css",
+      chunkFilename: "[id].css"
     })
   ]
 };
