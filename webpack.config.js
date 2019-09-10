@@ -1,21 +1,20 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const glob = require("glob");
+const dirNames = getDirNames();
 
 module.exports = {
-  entry: {
-    index: "./src/index/index.tsx",
-    about: "./src/about/index.tsx"
-  },
+  entry: getEntry(),
   output: {
-    path: path.resolve(__dirname, "../dist"),
+    path: path.resolve(__dirname, "dist"),
     filename: "[name]/index.bundle.[hash].js",
     publicPath: "/"
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
-      "@": path.resolve(__dirname, "../src")
+      "@": path.resolve(__dirname, "src")
     }
   },
   module: {
@@ -39,7 +38,7 @@ module.exports = {
           "postcss-loader",
           "sass-loader"
         ],
-        include: path.join(__dirname, "../src"), //限制范围，提高打包速度
+        include: path.join(__dirname, "src"), //限制范围，提高打包速度
         exclude: /node_modules/
       },
       {
@@ -79,21 +78,35 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: "index/index.html",
-      template: "./src/index/index.html",
-      favicon: "./src/assets/images/react.ico",
-      chunks: ["index"]
-    }),
-    new HtmlWebpackPlugin({
-      filename: "about/index.html",
-      template: "./src/about/index.html",
-      favicon: "./src/assets/images/react.ico",
-      chunks: ["about"]
-    }),
+    ...getHtmlConfig(),
     new MiniCssExtractPlugin({
       filename: "[name]/index.bundle.[hash].css",
       chunkFilename: "[id].css"
     })
   ]
 };
+
+function getDirNames() {
+  const dirPaths = glob.sync("./src/*/index.html"); // 只搜索 src 下一级文件夹中的 index.html
+
+  return dirPaths.map(
+    (dirPath) => dirPath.match(/^.\/src\/(\S+)\/index.html$/)[1]
+  );
+}
+function getEntry() {
+  const entries = {};
+  dirNames.map((dirName) => {
+    entries[dirName] = `./src/${dirName}/index.tsx`;
+  });
+  return entries;
+}
+function getHtmlConfig() {
+  return dirNames.map((dirName) => {
+    return new HtmlWebpackPlugin({
+      filename: `${dirName}/index.html`,
+      template: `./src/${dirName}/index.html`,
+      favicon: "./src/assets/images/react.ico",
+      chunks: [dirName]
+    });
+  });
+}
