@@ -1,7 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const glob = require("glob");
+const getDirNames = require("./getDirNames");
 const dirNames = getDirNames();
 
 module.exports = {
@@ -86,13 +86,9 @@ module.exports = {
   ]
 };
 
-function getDirNames() {
-  const dirPaths = glob.sync("./src/*/index.html"); // 只搜索 src 下一级文件夹中的 index.html
-
-  return dirPaths.map(
-    (dirPath) => dirPath.match(/^.\/src\/(\S+)\/index.html$/)[1]
-  );
-}
+/**
+ * 批量获取 entry 值
+ */
 function getEntry() {
   const entries = {};
   dirNames.map((dirName) => {
@@ -100,6 +96,10 @@ function getEntry() {
   });
   return entries;
 }
+
+/**
+ * 批量获取 new HtmlWebpackPlugin()
+ */
 function getHtmlConfig() {
   return dirNames.map((dirName) => {
     return new HtmlWebpackPlugin({
