@@ -9,6 +9,7 @@ module.exports = merge(baseConfig, {
       title: "webpack-with-react-typescript",
       template: "./src/index.html",
       favicon: "./src/react.ico",
+      hash: true, //防止缓存
       minify: {
         removeComments: true, //删除Html注释
         collapseWhitespace: true, //去除空格
