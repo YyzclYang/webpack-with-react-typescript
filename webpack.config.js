@@ -92,7 +92,7 @@ module.exports = {
 function getEntry() {
   const entries = {};
   dirNames.map((dirName) => {
-    entries[dirName] = `./src/${dirName}/index.tsx`;
+    entries[dirName] = `./src/pages/${dirName}/index.tsx`;
   });
   return entries;
 }
@@ -104,7 +104,7 @@ function getHtmlConfig() {
   return dirNames.map((dirName) => {
     return new HtmlWebpackPlugin({
       filename: `${dirName}/index.html`,
-      template: `./src/${dirName}/index.html`,
+      template: `./src/pages/${dirName}/index.html`,
       favicon: "./src/assets/images/react.ico",
       chunks: [dirName]
     });

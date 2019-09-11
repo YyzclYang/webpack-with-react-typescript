@@ -1,4 +1,5 @@
 import React from "react";
+import "@/common/common.scss";
 import "./page.scss";
 import "@/assets/images/react.svg";
 

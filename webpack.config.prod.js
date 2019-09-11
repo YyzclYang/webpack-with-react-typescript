@@ -13,7 +13,7 @@ function getHtmlConfig() {
   return dirNames.map((dirName) => {
     return new HtmlWebpackPlugin({
       filename: `${dirName}/index.html`,
-      template: `./src/${dirName}/index.html`,
+      template: `./src/pages/${dirName}/index.html`,
       favicon: "./src/assets/images/react.ico",
       chunks: [dirName],
       hash: true, //防止缓存
