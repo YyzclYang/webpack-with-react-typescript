@@ -10,7 +10,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].bundle.[hash].js",
+    filename: "[name].[hash].js",
+    chunkFilename: "chunks/[name].[hash].js",
     publicPath: "/"
   },
   resolve: {
@@ -51,7 +52,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/images",
           name: "[name].[hash].[ext]",
-          publicPath: "./asset/images"
+          publicPath: "./assets/images"
         }
       },
       {
@@ -61,7 +62,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/media",
           name: "[name].[hash].[ext]",
-          publicPath: "./asset/media"
+          publicPath: "./assets/media"
         }
       },
       {
@@ -71,10 +72,37 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/fonts",
           name: "[name].[hash].[ext]",
-          publicPath: "./asset/fonts"
+          publicPath: "./assets/fonts"
         }
       }
     ]
+  },
+  optimization: {
+    splitChunks: {
+      chunks: "async",
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: "~",
+      name: false,
+      cacheGroups: {
+        vendors: {
+          name: `chunk-vendors`,
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          chunks: "initial"
+        },
+        common: {
+          name: `chunk-common`,
+          minChunks: 2,
+          priority: -20,
+          chunks: "initial",
+          reuseExistingChunk: true
+        }
+      }
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -83,7 +111,7 @@ module.exports = {
       favicon: "./src/react.ico"
     }),
     new MiniCssExtractPlugin({
-      filename: "index.bundle.[hash].css"
+      filename: "index.[hash].css"
     })
   ]
 };

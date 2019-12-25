@@ -4,6 +4,7 @@ const baseConfig = require("./webpack.config");
 
 module.exports = merge(baseConfig, {
   mode: "production",
+  devtool: "source-map",
   plugins: [
     new HtmlWebpackPlugin({
       title: "webpack-with-react-typescript",
