@@ -2,7 +2,34 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const utils = require("./utils");
+
 const pageDirNames = utils.getPageDirNames();
+const isDev = process.env.NODE_ENV !== "production";
+
+/**
+ * 批量获取 entry 值
+ */
+function getEntry() {
+  const entries = {};
+  pageDirNames.map((dirName) => {
+    entries[dirName] = `./src/pages/${dirName}/index.tsx`;
+  });
+  return entries;
+}
+
+/**
+ * 批量获取 new HtmlWebpackPlugin()
+ */
+function getHtmlConfig() {
+  return pageDirNames.map((dirName) => {
+    return new HtmlWebpackPlugin({
+      filename: `${dirName}/index.html`,
+      template: `./src/pages/${dirName}/index.html`,
+      favicon: "./src/assets/images/react.ico",
+      chunks: [dirName]
+    });
+  });
+}
 
 module.exports = {
   entry: getEntry(),
@@ -32,8 +59,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          "style-loader",
-          MiniCssExtractPlugin.loader,
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader"
@@ -52,7 +78,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/images",
           name: "[name].[hash].[ext]",
-          publicPath: "/asset/images"
+          publicPath: "/assets/images"
         }
       },
       {
@@ -62,7 +88,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/media",
           name: "[name].[hash].[ext]",
-          publicPath: "/asset/media"
+          publicPath: "/assets/media"
         }
       },
       {
@@ -72,7 +98,7 @@ module.exports = {
           limit: 8192,
           outputPath: "./asset/fonts",
           name: "[name].[hash].[ext]",
-          publicPath: "/asset/fonts"
+          publicPath: "/assets/fonts"
         }
       }
     ]
@@ -85,28 +111,3 @@ module.exports = {
     })
   ]
 };
-
-/**
- * 批量获取 entry 值
- */
-function getEntry() {
-  const entries = {};
-  pageDirNames.map((dirName) => {
-    entries[dirName] = `./src/pages/${dirName}/index.tsx`;
-  });
-  return entries;
-}
-
-/**
- * 批量获取 new HtmlWebpackPlugin()
- */
-function getHtmlConfig() {
-  return pageDirNames.map((dirName) => {
-    return new HtmlWebpackPlugin({
-      filename: `${dirName}/index.html`,
-      template: `./src/pages/${dirName}/index.html`,
-      favicon: "./src/assets/images/react.ico",
-      chunks: [dirName]
-    });
-  });
-}
