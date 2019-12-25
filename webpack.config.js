@@ -2,6 +2,8 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+const isDev = process.env.NODE_ENV !== "production";
+
 module.exports = {
   entry: {
     index: "./src/index.tsx"
@@ -32,8 +34,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          "style-loader",
-          MiniCssExtractPlugin.loader,
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader"
