@@ -1,8 +1,8 @@
 const merge = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const baseConfig = require("./webpack.config");
-const getDirNames = require("./getDirNames");
-const dirNames = getDirNames();
+const utils = require("./utils");
+const pageDirNames = utils.getPageDirNames();
 
 module.exports = merge(baseConfig, {
   mode: "production",
@@ -10,12 +10,12 @@ module.exports = merge(baseConfig, {
 });
 
 function getHtmlConfig() {
-  return dirNames.map((dirName) => {
+  return pageDirNames.map((pageDirName) => {
     return new HtmlWebpackPlugin({
-      filename: `${dirName}/index.html`,
-      template: `./src/pages/${dirName}/index.html`,
+      filename: `${pageDirName}/index.html`,
+      template: `./src/pages/${pageDirName}/index.html`,
       favicon: "./src/assets/images/react.ico",
-      chunks: [dirName],
+      chunks: [pageDirName],
       hash: true, //防止缓存
       minify: {
         removeComments: true, //删除Html注释

@@ -1,14 +1,14 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const getDirNames = require("./getDirNames");
-const dirNames = getDirNames();
+const utils = require("./utils");
+const pageDirNames = utils.getPageDirNames();
 
 module.exports = {
   entry: getEntry(),
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name]/index.bundle.[hash].js",
+    filename: "[name]/index.[hash].js",
     publicPath: "/"
   },
   resolve: {
@@ -80,7 +80,7 @@ module.exports = {
   plugins: [
     ...getHtmlConfig(),
     new MiniCssExtractPlugin({
-      filename: "[name]/index.bundle.[hash].css",
+      filename: "[name]/index.[hash].css",
       chunkFilename: "[id].css"
     })
   ]
@@ -91,7 +91,7 @@ module.exports = {
  */
 function getEntry() {
   const entries = {};
-  dirNames.map((dirName) => {
+  pageDirNames.map((dirName) => {
     entries[dirName] = `./src/pages/${dirName}/index.tsx`;
   });
   return entries;
@@ -101,7 +101,7 @@ function getEntry() {
  * 批量获取 new HtmlWebpackPlugin()
  */
 function getHtmlConfig() {
-  return dirNames.map((dirName) => {
+  return pageDirNames.map((dirName) => {
     return new HtmlWebpackPlugin({
       filename: `${dirName}/index.html`,
       template: `./src/pages/${dirName}/index.html`,
