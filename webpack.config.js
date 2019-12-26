@@ -33,7 +33,7 @@ module.exports = {
         loader: "awesome-typescript-loader"
       },
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         use: [
           isDev() ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
