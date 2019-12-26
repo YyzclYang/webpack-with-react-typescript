@@ -1,42 +1,14 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const utils = require("./utils");
 
-const pageDirNames = utils.getPageDirNames();
-const isDev = process.env.NODE_ENV !== "production";
-
-/**
- * 批量获取 entry 值
- */
-function getEntry() {
-  const entries = {};
-  pageDirNames.map((dirName) => {
-    entries[dirName] = `./src/pages/${dirName}/index.tsx`;
-  });
-  return entries;
-}
-
-/**
- * 批量获取 new HtmlWebpackPlugin()
- */
-function getHtmlConfig() {
-  return pageDirNames.map((dirName) => {
-    return new HtmlWebpackPlugin({
-      filename: `${dirName}/index.html`,
-      template: `./src/pages/${dirName}/index.html`,
-      favicon: "./src/assets/images/react.ico",
-      chunks: [dirName]
-    });
-  });
-}
-
 module.exports = {
-  entry: getEntry(),
+  entry: utils.getEntry(),
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name]/index.[hash].js",
-    publicPath: "/"
+    filename: "static/js/[name].[hash].js",
+    chunkFilename: "static/chunks/[name].[hash].js"
+    // publicPath: ""
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
@@ -59,7 +31,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+          utils.isDev() ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader"
@@ -76,9 +48,9 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/images",
-          name: "[name].[hash].[ext]",
-          publicPath: "/assets/images"
+          outputPath: "./static/assets/images",
+          name: "[name].[hash].[ext]"
+          // publicPath: "static/assets/images"
         }
       },
       {
@@ -86,9 +58,9 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/media",
-          name: "[name].[hash].[ext]",
-          publicPath: "/assets/media"
+          outputPath: "./static/assets/media",
+          name: "[name].[hash].[ext]"
+          // publicPath: "static/assets/media"
         }
       },
       {
@@ -96,18 +68,12 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/fonts",
-          name: "[name].[hash].[ext]",
-          publicPath: "/assets/fonts"
+          outputPath: "./static/assets/fonts",
+          name: "[name].[hash].[ext]"
+          // publicPath: "static/assets/fonts"
         }
       }
     ]
   },
-  plugins: [
-    ...getHtmlConfig(),
-    new MiniCssExtractPlugin({
-      filename: "[name]/index.[hash].css",
-      chunkFilename: "[id].css"
-    })
-  ]
+  plugins: [...utils.getHtmlConfig()]
 };

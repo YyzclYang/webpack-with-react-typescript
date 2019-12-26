@@ -1,27 +1,41 @@
 const merge = require("webpack-merge");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const baseConfig = require("./webpack.config");
-const utils = require("./utils");
-const pageDirNames = utils.getPageDirNames();
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(baseConfig, {
   mode: "production",
-  plugins: [...getHtmlConfig()]
-});
-
-function getHtmlConfig() {
-  return pageDirNames.map((pageDirName) => {
-    return new HtmlWebpackPlugin({
-      filename: `${pageDirName}/index.html`,
-      template: `./src/pages/${pageDirName}/index.html`,
-      favicon: "./src/assets/images/react.ico",
-      chunks: [pageDirName],
-      hash: true, //防止缓存
-      minify: {
-        removeComments: true, //删除Html注释
-        collapseWhitespace: true, //去除空格
-        removeAttributeQuotes: true //去除属性引号
+  devtool: "source-map",
+  optimization: {
+    splitChunks: {
+      chunks: "async",
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: "~",
+      name: false,
+      cacheGroups: {
+        vendors: {
+          name: `chunk-vendors`,
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          chunks: "initial"
+        },
+        common: {
+          name: `chunk-common`,
+          minChunks: 2,
+          priority: -20,
+          chunks: "initial",
+          reuseExistingChunk: true
+        }
       }
-    });
-  });
-}
+    }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "static/css/[name].[hash].css",
+      chunkFilename: "[id].css"
+    })
+  ]
+});
