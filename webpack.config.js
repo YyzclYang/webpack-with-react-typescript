@@ -2,7 +2,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const isDev = process.env.NODE_ENV !== "production";
+const isDev = () => process.env.NODE_ENV !== "production";
 
 module.exports = {
   entry: {
@@ -10,9 +10,9 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].[hash].js",
-    chunkFilename: "chunks/[name].[hash].js",
-    publicPath: "/"
+    filename: "static/js/[name].[hash].js",
+    chunkFilename: "static/chunks/[name].[hash].js"
+    // publicPath: "/"
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
@@ -35,7 +35,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+          isDev() ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader"
@@ -50,9 +50,9 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/images",
-          name: "[name].[hash].[ext]",
-          publicPath: "./assets/images"
+          outputPath: "./static/assets/images",
+          name: "[name].[hash].[ext]"
+          // publicPath: "./static/assets/images"
         }
       },
       {
@@ -60,9 +60,9 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/media",
-          name: "[name].[hash].[ext]",
-          publicPath: "./assets/media"
+          outputPath: "./static/assets/media",
+          name: "[name].[hash].[ext]"
+          // publicPath: "./static/assets/media"
         }
       },
       {
@@ -70,48 +70,18 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/fonts",
-          name: "[name].[hash].[ext]",
-          publicPath: "./assets/fonts"
+          outputPath: "./static/assets/fonts",
+          name: "[name].[hash].[ext]"
+          // publicPath: "./static/assets/fonts"
         }
       }
     ]
-  },
-  optimization: {
-    splitChunks: {
-      chunks: "async",
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: "~",
-      name: false,
-      cacheGroups: {
-        vendors: {
-          name: `chunk-vendors`,
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          chunks: "initial"
-        },
-        common: {
-          name: `chunk-common`,
-          minChunks: 2,
-          priority: -20,
-          chunks: "initial",
-          reuseExistingChunk: true
-        }
-      }
-    }
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: "webpack-with-react-typescript",
       template: "./src/index.html",
-      favicon: "./src/react.ico"
-    }),
-    new MiniCssExtractPlugin({
-      filename: "index.[hash].css"
+      favicon: "./src/favicon.ico"
     })
   ]
 };
