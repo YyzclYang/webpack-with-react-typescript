@@ -2,6 +2,7 @@ const merge = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const baseConfig = require("./webpack.config");
 
 module.exports = merge(baseConfig, {
@@ -35,6 +36,7 @@ module.exports = merge(baseConfig, {
     }
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new CompressionWebpackPlugin({
       algorithm: "brotliCompress", // 压缩算法，Node 11.7.0 对 Brotli 有内置支持
       test: /\.(js|css)(\?.*)?$/i, // 压缩 js 和 css

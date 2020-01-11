@@ -1,4 +1,5 @@
 import React from "react";
+import { hot } from "react-hot-loader/root";
 import "./app.scss";
 import "./assets/images/react.svg";
 
@@ -15,10 +16,10 @@ const App: React.FunctionComponent = () => {
         <div className="content">
           <img src={require("@/assets/images/react.png")} alt="" />
         </div>
-        <audio controls loop src={require("@/assets/media/News.mp3")}></audio>
+        <audio controls loop src={require("@/assets/media/News.mp3")} />
       </section>
     </div>
   );
 };
 
-export default App;
+export default hot(App);
