@@ -9,5 +9,13 @@
     ],
     "@babel/react"
   ],
-  "plugins": ["react-hot-loader/babel"]
+  "plugins": [
+    [
+      "@babel/transform-runtime",
+      {
+        "corejs": 3
+      }
+    ],
+    "react-hot-loader/babel"
+  ]
 }
